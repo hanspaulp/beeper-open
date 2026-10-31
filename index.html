@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>Open in Beeper</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 0; padding: 48px 16px; background: #fff; color: #111; }
+  main { max-width: 32rem; margin: 0 auto; }
+  a { color: #1a5fd0; }
+  @media (prefers-color-scheme: dark) { body { background: #111; color: #eee; } a { color: #8ab4ff; } }
+</style>
+</head>
+<body>
+<main>
+<p id="msg">Opening the chat in Beeper…</p>
+<p id="alt" hidden>Nothing happened? <a id="go" href="#">Open it in Beeper</a>. Beeper Desktop has to be installed on this computer.</p>
+</main>
+<script>
+// The GTM cockpit's WhatsApp buttons land here, because a Garden widget opens only https links on
+// another site. The chat travels after the #, so it never reaches a server. Only a WhatsApp chat id
+// of the two shapes Beeper uses is accepted (the same rule as beeperUrl in the cockpit's server.js);
+// a chat on the +1 number lives on a local bridge, and Beeper finds it only with its account.
+(function () {
+  var q = new URLSearchParams(location.hash.slice(1));
+  var chat = q.get('chat') || '';
+  var m = q.get('channel') === 'whatsapp' && /^![A-Za-z0-9_-]{1,80}:(?:beeper\.local|([A-Za-z0-9_-]{1,80})\.local-whatsapp\.localhost)$/.exec(chat);
+  if (!m) { document.getElementById('msg').textContent = 'This is not a Beeper chat link.'; return; }
+  var url = 'beeper://select-thread/bridge-whatsapp/' + chat + (m[1] ? '?accountID=local-whatsapp_' + m[1] : '');
+  document.getElementById('go').href = url;
+  document.getElementById('alt').hidden = false;
+  location.href = url;
+})();
+</script>
+</body>
+</html>
