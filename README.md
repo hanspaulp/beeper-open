@@ -12,7 +12,7 @@ opens only https links on a site other than sauna.garden, so the cockpit cannot 
 - Everything travels after the `#`, so it never reaches GitHub's servers.
 - Only a WhatsApp chat id of the two shapes Beeper uses is accepted: `!<id>:beeper.local` (the +39
   account) and `!<id>:<suffix>.local-whatsapp.localhost` (the +1 number's local bridge, which Beeper
-  finds only with `accountID=local-whatsapp_<suffix>`). Anything else shows "This is not a Beeper chat link."
+  finds only with `accountID=local-whatsapp_<suffix>`). Anything else shows "This is not a chat link."
 - The page sends the browser to `beeper://select-thread/bridge-whatsapp/<chat id>[?accountID=...]`;
   the browser asks once whether to open Beeper Desktop. A link on the page does the same if the
   automatic hand-off is blocked.
